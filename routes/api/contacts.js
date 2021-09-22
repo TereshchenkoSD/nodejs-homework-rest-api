@@ -1,18 +1,57 @@
 const express = require("express");
 const router = express.Router();
 
-const contactsOperations = require("./");
+const contactsOperations = require("../../model");
 
 router.get("/", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const contacts = await contactsOperations.listContacts();
+    res.json({
+      status: "sucess",
+      code: 200,
+      data: {
+        result: contacts,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const { contactId } = req.params;
+    const result = await contactsOperations.getContactById(contactId);
+    if (!result) {
+      const error = new Error(`Contact with the id-${contactId} was not found`);
+      error.status = 404;
+      throw error;
+    }
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        result,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post("/", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const result = await contactsOperations.addContact(req.body);
+    res.status(201).json({
+      status: "success",
+      code: 201,
+      data: {
+        result,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete("/:contactId", async (req, res, next) => {

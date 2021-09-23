@@ -1,16 +1,11 @@
 const { NotFound } = require("http-errors");
 const { contactSchema } = require("../schemas");
+const { sendSuccessRes } = require("../helpers");
 const contactsOperations = require("../model");
 
 const getAll = async (req, res) => {
-  const contacts = await contactsOperations.listContacts();
-  res.json({
-    status: "sucess",
-    code: 200,
-    data: {
-      result: contacts,
-    },
-  });
+  const result = await contactsOperations.listContacts();
+  sendSuccessRes(res, { result });
 };
 
 const getById = async (req, res) => {
@@ -19,24 +14,12 @@ const getById = async (req, res) => {
   if (!result) {
     throw new NotFound(`Contact with the id-${contactId} was not found`);
   }
-  res.json({
-    status: "success",
-    code: 200,
-    data: {
-      result,
-    },
-  });
+  sendSuccessRes(res, { result });
 };
 
 const add = async (req, res) => {
   const result = await contactsOperations.addContact(req.body);
-  res.status(201).json({
-    status: "success",
-    code: 201,
-    data: {
-      result,
-    },
-  });
+  sendSuccessRes(res, { result }, 201);
 };
 
 const updateById = async (req, res) => {
@@ -52,13 +35,7 @@ const updateById = async (req, res) => {
   if (!result) {
     throw new NotFound(`Contact with the id-${contactId} was not found`);
   }
-  res.json({
-    status: "success",
-    code: 200,
-    data: {
-      result,
-    },
-  });
+  sendSuccessRes(res, { result });
 };
 
 const removeById = async (req, res) => {
@@ -67,11 +44,7 @@ const removeById = async (req, res) => {
   if (!result) {
     throw new NotFound(`Contact with the id-${contactId} was not found`);
   }
-  res.json({
-    status: "success",
-    code: 200,
-    message: "Success delete",
-  });
+  sendSuccessRes(res, { message: "Success delete" });
 };
 
 module.exports = { getAll, getById, add, updateById, removeById };

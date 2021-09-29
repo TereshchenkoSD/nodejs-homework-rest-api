@@ -20,7 +20,7 @@ const contactSchema = Schema(
       required: [true, "Email is obligatory parameter"],
       unique: true,
     },
-    favourite: {
+    favorite: {
       type: Boolean,
       default: false,
     },
@@ -32,17 +32,17 @@ const contactJoiSchema = Joi.object({
   name: Joi.string().min(1).required(),
   phone: Joi.string().length(10).pattern(phoneRegExp).required(),
   email: Joi.string().min(1).required(),
-  favourite: Joi.boolean(),
+  favorite: Joi.boolean(),
 });
 
-const updateFavouriteJoiSchema = Joi.object({
-  favourite: Joi.boolean().required,
+const updateFavoriteJoiSchema = Joi.object({
+  favorite: Joi.boolean().required(),
 });
 
 const Contact = model("contact", contactSchema);
 
 module.exports = {
   contactJoiSchema,
-  updateFavouriteJoiSchema,
+  updateFavoriteJoiSchema,
   Contact,
 };

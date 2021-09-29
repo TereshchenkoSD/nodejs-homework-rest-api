@@ -5,7 +5,7 @@ const { contacts: ctrl } = require("../../controllers");
 const { controllerWrapper, validation } = require("../../middlewares");
 const {
   contactJoiSchema,
-  updateFavouriteJoiSchema,
+  updateFavoriteJoiSchema,
 } = require("../../models/contact");
 
 router.get("/", controllerWrapper(ctrl.getAll));
@@ -23,9 +23,9 @@ router.put(
 );
 
 router.patch(
-  "/:contactId",
-  validation(updateFavouriteJoiSchema),
-  controllerWrapper(ctrl.updateFavourite)
+  "/:contactId/favorite",
+  validation(updateFavoriteJoiSchema),
+  controllerWrapper(ctrl.updateFavorite)
 );
 
 module.exports = router;

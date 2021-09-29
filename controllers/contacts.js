@@ -4,7 +4,7 @@ const { sendSuccessRes } = require("../helpers");
 const { Contact } = require("../models");
 
 const getAll = async (req, res) => {
-  const result = await Contact.find({}, "_id name phone email favourite");
+  const result = await Contact.find({}, "_id name phone email favorite");
   sendSuccessRes(res, { result });
 };
 
@@ -12,7 +12,7 @@ const getById = async (req, res) => {
   const { contactId } = req.params;
   const result = await Contact.findById(
     contactId,
-    "_id name phone email favourite"
+    "_id name phone email favorite"
   );
   if (!result) {
     throw new NotFound(`Contact with the id-${contactId} was not found`);
@@ -49,25 +49,41 @@ const removeById = async (req, res) => {
   sendSuccessRes(res, { message: "Success delete" });
 };
 
-const updateFavourite = async (req, res) => {
-  const { error } = contactJoiSchema.validate(req.body);
-  if (error) {
-    throw new BadRequest(error.message);
-  }
+const updateFavorite = async (req, res) => {
   const { contactId } = req.params;
-  const { favourite } = req.body;
+  const { favorite } = req.body;
   const result = await Contact.findByIdAndUpdate(
     contactId,
-    { favourite },
+    { favorite },
     {
       new: true,
     }
   );
   if (!result) {
-    throw new NotFound(`Contact with the id-${contactId} was not found`);
+    throw new NotFound(404, "Not found");
   }
-  sendSuccessRes(res, { result });
+  sendSuccessResp(res, { result });
 };
+
+// const updateFavorite = async (req, res) => {
+//   const { error } = contactJoiSchema.validate(req.body);
+//   if (error) {
+//     throw new BadRequest(error.message);
+//   }
+//   const { contactId } = req.params;
+//   const { favorite } = req.body;
+//   const result = await Contact.findByIdAndUpdate(
+//     contactId,
+//     { favorite },
+//     {
+//       new: true,
+//     }
+//   );
+//   if (!result) {
+//     throw new NotFound(`Contact with the id-${contactId} was not found`);
+//   }
+//   sendSuccessRes(res, { result });
+// };
 
 module.exports = {
   getAll,
@@ -75,5 +91,5 @@ module.exports = {
   add,
   updateById,
   removeById,
-  updateFavourite,
+  updateFavorite,
 };

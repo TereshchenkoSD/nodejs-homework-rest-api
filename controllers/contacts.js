@@ -60,30 +60,10 @@ const updateFavorite = async (req, res) => {
     }
   );
   if (!result) {
-    throw new NotFound(404, "Not found");
+    throw new NotFound(`Contact with the id-${contactId} was not found`);
   }
-  sendSuccessResp(res, { result });
+  sendSuccessRes(res, { result });
 };
-
-// const updateFavorite = async (req, res) => {
-//   const { error } = contactJoiSchema.validate(req.body);
-//   if (error) {
-//     throw new BadRequest(error.message);
-//   }
-//   const { contactId } = req.params;
-//   const { favorite } = req.body;
-//   const result = await Contact.findByIdAndUpdate(
-//     contactId,
-//     { favorite },
-//     {
-//       new: true,
-//     }
-//   );
-//   if (!result) {
-//     throw new NotFound(`Contact with the id-${contactId} was not found`);
-//   }
-//   sendSuccessRes(res, { result });
-// };
 
 module.exports = {
   getAll,

@@ -1,5 +1,3 @@
-//Comment
-
 const { NotFound } = require("http-errors");
 const { contactJoiSchema } = require("../models/contact");
 const { sendSuccessRes } = require("../helpers");

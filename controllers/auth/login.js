@@ -3,7 +3,7 @@ const { NotFound, BadRequest } = require("http-errors");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = User.findOne({ email });
+  const user = await User.findOne({ email });
   if (!user) {
     throw new NotFound(`Email ${email} not found`);
   }
@@ -11,7 +11,16 @@ const login = async (req, res) => {
   if (!user.comparePassword(password)) {
     throw new BadRequest("Invalid password");
   }
-  res.status().json({});
+  const { _id } = user;
+  const token = user.createToken();
+  await User.findByIdAndUpdate(_id, { token });
+  res.status(200).json({
+    status: "success",
+    code: 200,
+    data: {
+      token,
+    },
+  });
 };
 
 module.exports = login;

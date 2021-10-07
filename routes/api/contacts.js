@@ -12,7 +12,7 @@ const {
   updateFavoriteJoiSchema,
 } = require("../../models/contact");
 
-router.get("/", controllerWrapper(ctrl.getAll));
+router.get("/", authenticate, controllerWrapper(ctrl.getAll));
 
 router.get("/:contactId", controllerWrapper(ctrl.getById));
 
@@ -23,16 +23,18 @@ router.post(
   controllerWrapper(ctrl.add)
 );
 
-router.delete("/:contactId", controllerWrapper(ctrl.removeById));
+router.delete("/:contactId", authenticate, controllerWrapper(ctrl.removeById));
 
 router.put(
   "/:contactId",
+  authenticate,
   validation(contactJoiSchema),
   controllerWrapper(ctrl.updateById)
 );
 
 router.patch(
   "/:contactId/favorite",
+  authenticate,
   validation(updateFavoriteJoiSchema),
   controllerWrapper(ctrl.updateFavorite)
 );

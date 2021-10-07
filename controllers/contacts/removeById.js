@@ -4,11 +4,11 @@ const { Contact } = require("../../models");
 
 const removeById = async (req, res) => {
   const { contactId } = req.params;
-  const result = await Contact.findByIdAndDelete(contactId);
-  if (!result) {
+  const contact = await Contact.findByIdAndDelete(contactId);
+  if (!contact) {
     throw new NotFound(`Contact with the id-${contactId} was not found`);
   }
-  sendSuccessRes(res, { message: "Success delete" });
+  sendSuccessRes(res, { contact, message: "Success delete" });
 };
 
 module.exports = removeById;

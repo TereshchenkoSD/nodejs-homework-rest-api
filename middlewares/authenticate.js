@@ -24,10 +24,18 @@ const authenticate = async (req, res, next) => {
         code: 401,
         message: "Not authorized",
       });
+      return;
     }
     req.user = user;
     next();
-  } catch (error) {}
+  } catch (error) {
+    res.status(401).json({
+      status: "error",
+      code: 401,
+      message: "Not authorized",
+    });
+    return;
+  }
 };
 
 module.exports = authenticate;

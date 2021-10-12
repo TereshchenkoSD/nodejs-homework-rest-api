@@ -3,6 +3,8 @@ const path = require("path");
 
 const tempDir = path.join(__dirname, "../", "temp");
 
+const IMG_MAX_SIZE = 2048;
+
 const uploadConfig = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, tempDir);
@@ -11,7 +13,7 @@ const uploadConfig = multer.diskStorage({
     cb(null, file.originalname);
   },
   limits: {
-    fileSize: 2048,
+    fileSize: IMG_MAX_SIZE,
   },
 });
 

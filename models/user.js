@@ -41,6 +41,10 @@ userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
+userSchema.methods.setAvatar = function (avatar) {
+  this.avatarURL = avatar;
+};
+
 userSchema.methods.createToken = function () {
   const payload = {
     _id: this._id,

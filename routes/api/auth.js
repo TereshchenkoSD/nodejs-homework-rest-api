@@ -24,6 +24,11 @@ router.get("/logout", authenticate, controllerWrapper(ctrl.logout));
 
 router.get("/current", authenticate, controllerWrapper(ctrl.getCurrentUser));
 
-router.post("/", upload.single("image"));
+router.post(
+  "/avatars",
+  authenticate,
+  upload.single("image"),
+  controllerWrapper(ctrl.uploadAvatar)
+);
 
 module.exports = router;

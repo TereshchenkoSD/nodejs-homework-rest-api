@@ -24,9 +24,6 @@ router.get("/logout", authenticate, controllerWrapper(ctrl.logout));
 
 router.get("/current", authenticate, controllerWrapper(ctrl.getCurrentUser));
 
-router.post("/", upload.single("image"), async (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-});
+router.post("/", upload.single("image"));
 
 module.exports = router;

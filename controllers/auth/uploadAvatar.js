@@ -13,10 +13,7 @@ const uploadAvatar = async (req, res) => {
   try {
     const [extension] = originalname.split(".").reverse();
     const newAvatarName = `avatar-image_${_id}.${extension}`;
-    console.log(avatarsDir);
     const resultDir = path.join(avatarsDir, "avatars", newAvatarName);
-    console.log(resultDir);
-    console.log(tempDir);
 
     const initialAvatar = await Jimp.read(tempDir);
     const resizedAvatar = await initialAvatar.resize(250, 250);

@@ -11,6 +11,11 @@ const login = async (req, res) => {
   if (!user.comparePassword(password)) {
     throw new BadRequest("Invalid password");
   }
+
+  if (!user.verify) {
+    throw new BadRequest("Email is not verified");
+  }
+
   const { _id } = user;
   const token = user.createToken();
   await User.findByIdAndUpdate(_id, { token });

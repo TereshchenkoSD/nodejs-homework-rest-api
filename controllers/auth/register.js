@@ -2,8 +2,11 @@ const { User } = require("../../models");
 const { Conflict } = require("http-errors");
 const gravatar = require("gravatar");
 const { nanoid } = require("nanoid");
+require("dotenv").config();
 
 const { sendEmail } = require("../../helpers");
+
+const { SENDER_HOST_ADDRESS } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -24,7 +27,7 @@ const register = async (req, res) => {
     to: email,
     subject: "Confirmation of signup on the web-site",
     html: `
-    <a href="http://localhost:3000/api/auth/verify/${verifyToken}" target="_blank">Confirm the email</a>
+    <a href="${SENDER_HOST_ADDRESS}/api/auth/verify/${verifyToken}" target="_blank">Confirm the email</a>
     `,
   };
 
